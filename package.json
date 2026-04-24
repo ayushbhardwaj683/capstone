@@ -10,8 +10,8 @@
   "scripts": {
     "dev:web": "npm run dev --workspace frontend",
     "dev:api": "npm run dev --workspace backend",
-    "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces"
+    "build": "npm run build --workspace @form-builder/shared && npm run build --workspace frontend && npm run build --workspace backend",
+    "lint": "npm run lint --workspace @form-builder/shared && npm run lint --workspace frontend && npm run lint --workspace backend"
   },
   "dependencies": {
     "dotenv": "^17.3.1"
