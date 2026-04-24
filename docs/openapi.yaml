@@ -1,0 +1,125 @@
+openapi: 3.0.3
+info:
+  title: Form Builder SaaS API
+  version: 0.1.0
+  description: Core API contract for a forms SaaS capstone scaffold.
+servers:
+  - url: http://localhost:4000/api
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      responses:
+        '201':
+          description: User created
+  /auth/login:
+    post:
+      summary: Log in a user
+      responses:
+        '200':
+          description: Login successful
+  /forms:
+    get:
+      summary: List forms for the current user
+      responses:
+        '200':
+          description: A paginated form list
+    post:
+      summary: Create a new form
+      responses:
+        '201':
+          description: Form created
+  /forms/{formId}:
+    get:
+      summary: Fetch one form for editing
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Form detail
+    patch:
+      summary: Update a form
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Form updated
+    delete:
+      summary: Archive or delete a form
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Form removed
+  /forms/{formId}/publish:
+    post:
+      summary: Publish a form
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Form published
+  /forms/{formId}/responses:
+    get:
+      summary: List responses for a form
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response list
+  /forms/{formId}/analytics:
+    get:
+      summary: Retrieve analytics for a form
+      parameters:
+        - in: path
+          name: formId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Analytics payload
+  /public/forms/{slug}:
+    get:
+      summary: Resolve a public form by slug
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Public form payload
+  /public/forms/{slug}/submit:
+    post:
+      summary: Submit a public response
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Response captured
