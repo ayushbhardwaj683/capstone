@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: formly-frontend
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build --workspace @form-builder/shared && npm run build --workspace frontend
+    startCommand: npm run start --workspace frontend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+
+  - type: web
+    name: formly-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build --workspace @form-builder/shared && npm run build --workspace backend
+    startCommand: npm run start --workspace backend
+    envVars:
+      - key: NODE_ENV
+        value: production
