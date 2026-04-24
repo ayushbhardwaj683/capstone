@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
@@ -10,7 +10,7 @@ import { DragDropBuilder } from "@/components/form-builder/DragDropBuilder";
 import { AppShell } from "@/components/layout/AppShell";
 import { useAuth } from "@/hooks/useAuth";
 
-export default function CreateFormPage() {
+function CreateFormContent() {
   const searchParams = useSearchParams();
   const templateId = searchParams.get("template");
   const { token } = useAuth();
@@ -104,5 +104,22 @@ export default function CreateFormPage() {
 
       <DragDropBuilder externalDraft={aiDraft} initialTemplateId={templateId} />
     </AppShell>
+  );
+}
+
+export default function CreateFormPage() {
+  return (
+    <Suspense
+      fallback={
+        <AppShell
+          title="Create a New Form"
+          subtitle="Use AI or build manually. The AI draft fills the same editor so you can still adjust every field."
+        >
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">Loading form builder...</div>
+        </AppShell>
+      }
+    >
+      <CreateFormContent />
+    </Suspense>
   );
 }
